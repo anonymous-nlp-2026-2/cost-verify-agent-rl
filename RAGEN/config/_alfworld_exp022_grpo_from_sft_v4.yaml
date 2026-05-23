@@ -1,0 +1,86 @@
+defaults:
+  - base
+
+hydra:
+  searchpath:
+    - pkg://verl.trainer.config
+
+model_path: ./checkpoints/qwen3_exp021_ragen_sft_v4
+
+system:
+  CUDA_VISIBLE_DEVICES: "0,1"
+
+micro_batch_size_per_gpu: 1
+ppo_mini_batch_size: 32
+
+trainer:
+  project_name: cost-verify-agent-rl
+  experiment_name: exp022-alfworld-grpo-from-sft-v4
+  total_training_steps: 30
+  n_gpus_per_node: 2
+  val_before_train: True
+  test_freq: 20
+  save_freq: 5
+  local_log_dir: "./checkpoints/exp022/"
+  default_local_dir: "./checkpoints/exp022/"
+  logger: ['console']
+  max_actor_ckpt_to_keep: 3
+  resume_mode: "disable"
+
+actor_rollout_ref:
+  model:
+    override_config:
+      attn_implementation: sdpa
+  actor:
+    use_ref: True
+    use_torch_compile: False
+    use_kl_loss: True
+    kl_loss_coef: 0.5
+    kl_loss_type: kl
+    clip_ratio_low: 0.2
+    clip_ratio_high: 0.28
+    loss_agg_mode: "seq-mean-token-mean"
+    grad_clip: 1.0
+    optim:
+      lr: 5e-7
+  ref:
+    use_torch_compile: False
+  rollout:
+    response_length: 1024
+    gpu_memory_utilization: 0.4
+    max_model_len: 8192
+    temperature: 1.0
+    max_num_batched_tokens: 8192
+    enforce_eager: True
+    val_kwargs:
+      do_sample: True
+      temperature: 0.4
+
+algorithm:
+  adv_estimator: grpo
+  gamma: 0.95
+  high_level_gamma: 0.95
+  norm_adv_by_std_in_grpo: True
+
+agent_proxy:
+  max_turn: 30
+  max_actions_per_turn: 1
+  max_prompt_length: 4096
+
+collapse_detection:
+  multi_turn_enabled: false
+
+es_manager:
+  format_penalty: 0
+  train:
+    env_groups: 4
+    group_size: 16
+    env_configs:
+      tags: ["AlfworldSG"]
+      n_groups: [4]
+  val:
+    env_groups: 4
+    group_size: 1
+    env_configs:
+      tags: ["AlfworldSG"]
+      n_groups: [4]

@@ -1,0 +1,100 @@
+# exp029 re-eval on valid_unseen (134 tasks, OOD) — D064 alignment
+# Loads checkpoint from step 15, runs val_before_train only
+
+defaults:
+  - base
+
+hydra:
+  searchpath:
+    - pkg://verl.trainer.config
+
+model_path: ./checkpoints/qwen3_exp021_ragen_sft_v4
+
+system:
+  CUDA_VISIBLE_DEVICES: "0,1"
+
+micro_batch_size_per_gpu: 1
+ppo_mini_batch_size: 16
+
+trainer:
+  project_name: cost-verify-agent-rl
+  experiment_name: exp029-reeval-valid-unseen
+  total_training_steps: 1
+  n_gpus_per_node: 2
+  val_before_train: True
+  test_freq: 999
+  save_freq: 999
+  local_log_dir: "./checkpoints/exp029-reeval/"
+  default_local_dir: "./checkpoints/exp029-reeval/"
+  logger: ['console', 'wandb']
+  max_actor_ckpt_to_keep: 1
+  resume_mode: "resume_path"
+  resume_from_path: "./checkpoints/exp029/global_step_15"
+
+actor_rollout_ref:
+  model:
+    override_config:
+      attn_implementation: sdpa
+  actor:
+    fsdp_config:
+      optimizer_offload: True
+    use_ref: True
+    use_torch_compile: False
+    use_kl_loss: True
+    kl_loss_coef: 0.01
+    kl_loss_type: low_var_kl
+    entropy_coeff: 0.001
+    clip_ratio_low: 0.2
+    clip_ratio_high: 0.28
+    loss_agg_mode: "token-mean"
+    grad_clip: 1.0
+    ppo_max_token_len_per_gpu: 65536
+    optim:
+      lr: 1e-6
+  ref:
+    use_torch_compile: False
+    log_prob_max_token_len_per_gpu: 65536
+  rollout:
+    response_length: 1024
+    gpu_memory_utilization: 0.35
+    enable_chunked_prefill: true
+    max_model_len: 20480
+    temperature: 1.0
+    max_num_batched_tokens: 20480
+    enforce_eager: True
+    val_kwargs:
+      do_sample: True
+      temperature: 0.4
+
+algorithm:
+  adv_estimator: grpo
+  gamma: 0.95
+  high_level_gamma: 0.95
+  norm_adv_by_std_in_grpo: True
+
+agent_proxy:
+  context_window_mode: "full"
+  max_context_window: -1
+  step_independent_history_length: 2
+  max_turn: 50
+  max_actions_per_turn: 1
+  max_prompt_length: 16384
+  use_turn_scores: True
+
+collapse_detection:
+  multi_turn_enabled: false
+
+es_manager:
+  format_penalty: 0
+  train:
+    env_groups: 16
+    group_size: 8
+    env_configs:
+      tags: ["AlfworldSG"]
+      n_groups: [16]
+  val:
+    env_groups: 134
+    group_size: 1
+    env_configs:
+      tags: ["AlfworldSG_OOD"]
+      n_groups: [134]

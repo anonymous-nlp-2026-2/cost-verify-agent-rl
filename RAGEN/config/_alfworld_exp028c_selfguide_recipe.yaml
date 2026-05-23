@@ -1,0 +1,107 @@
+# exp028c: Self-Guide Recipe Alignment
+# 基于 exp027 调参，9 项改动（来自 Self-Guide / GiGPO 论文参数对齐）：
+#   1. ppo_mini_batch_size: 32 → 128 (框架断言限制: trajectory-level check 要求 <= env_groups*group_size)
+#   2. total_training_steps: 50 → 100 (延长训练)
+#   3. LR: 5e-7 → 1e-6 (论文标准 LR)
+#   4. kl_loss_coef: 0.005 → 0.01 (加强 KL 约束)
+#   5. env_groups: 8 → 16 (更多 rollout 多样性)
+#   6. group_size: 16 → 8 (总 rollouts 保持 128)
+#   7. entropy_coeff: 0.01 → 0.001 (降低 entropy bonus)
+#   8. step_independent_history_length: 5 → 2 (更短上下文窗口)
+#   9. loss_agg_mode: seq-mean-token-mean → token-mean (简化 loss 聚合)
+#
+# 不变：model_path = SFT checkpoint, gamma=0.95, clip_ratio=0.2, max_grad_norm=1.0
+# mini_batch 冲突检查：step_independent 模式下 128 trajectories 展开为 ~3200 训练样本，
+#   mini_batch=128 (框架 assert 限制，实际 step_independent 样本 ~3200)，无冲突。
+
+defaults:
+  - base
+
+hydra:
+  searchpath:
+    - pkg://verl.trainer.config
+
+model_path: ./checkpoints/qwen3_exp021_ragen_sft_v4
+
+system:
+  CUDA_VISIBLE_DEVICES: "0,1"
+
+micro_batch_size_per_gpu: 1
+ppo_mini_batch_size: 128
+
+trainer:
+  project_name: cost-verify-agent-rl
+  experiment_name: exp028c-alfworld-selfguide-recipe
+  total_training_steps: 100
+  n_gpus_per_node: 2
+  val_before_train: True
+  test_freq: 5
+  save_freq: 5
+  local_log_dir: "./checkpoints/exp028c/"
+  default_local_dir: "./checkpoints/exp028c/"
+  logger: ['console', 'wandb']
+  max_actor_ckpt_to_keep: 10
+  resume_mode: "disable"
+
+actor_rollout_ref:
+  model:
+    override_config:
+      attn_implementation: sdpa
+  actor:
+    use_ref: True
+    use_torch_compile: False
+    use_kl_loss: True
+    kl_loss_coef: 0.01
+    kl_loss_type: low_var_kl
+    entropy_coeff: 0.001
+    clip_ratio_low: 0.2
+    clip_ratio_high: 0.28
+    loss_agg_mode: "token-mean"
+    grad_clip: 1.0
+    optim:
+      lr: 1e-6
+  ref:
+    use_torch_compile: False
+  rollout:
+    response_length: 1024
+    gpu_memory_utilization: 0.4
+    max_model_len: 8192
+    temperature: 1.0
+    max_num_batched_tokens: 8192
+    enforce_eager: True
+    val_kwargs:
+      do_sample: True
+      temperature: 0.4
+
+algorithm:
+  adv_estimator: grpo
+  gamma: 0.95
+  high_level_gamma: 0.95
+  norm_adv_by_std_in_grpo: True
+
+agent_proxy:
+  context_window_mode: "step_independent"
+  max_context_window: 5
+  step_independent_history_length: 2
+  max_turn: 50
+  max_actions_per_turn: 1
+  max_prompt_length: 4096
+  use_turn_scores: True
+
+collapse_detection:
+  multi_turn_enabled: false
+
+es_manager:
+  format_penalty: 0
+  train:
+    env_groups: 16
+    group_size: 8
+    env_configs:
+      tags: ["AlfworldSG"]
+      n_groups: [16]
+  val:
+    env_groups: 140
+    group_size: 1
+    env_configs:
+      tags: ["AlfworldSG"]
+      n_groups: [140]

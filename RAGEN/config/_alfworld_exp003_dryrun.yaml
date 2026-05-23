@@ -1,0 +1,12 @@
+defaults:
+  - _alfworld_exp003
+
+hydra:
+  searchpath:
+    - pkg://verl.trainer.config
+
+trainer:
+  experiment_name: exp003-dryrun
+  total_training_steps: 2
+  local_log_dir: "./checkpoints/exp_003_dryrun/"
+  logger: ['console']

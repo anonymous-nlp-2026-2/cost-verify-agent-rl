@@ -1,0 +1,98 @@
+defaults:
+  - base
+
+hydra:
+  searchpath:
+    - pkg://verl.trainer.config
+
+model_path: ./checkpoints/qwen3_exp021_ragen_sft_v4
+
+system:
+  CUDA_VISIBLE_DEVICES: "0,1"
+
+micro_batch_size_per_gpu: 1
+ppo_mini_batch_size: 32
+
+trainer:
+  project_name: cost-verify-agent-rl
+  experiment_name: exp026-alfworld-step-independent-grpo
+  total_training_steps: 150
+  n_gpus_per_node: 2
+  val_before_train: True
+  test_freq: 5
+  save_freq: 25
+  local_log_dir: "./checkpoints/exp026/"
+  default_local_dir: "./checkpoints/exp026/"
+  logger: ['console', 'wandb']
+  max_actor_ckpt_to_keep: 3
+  resume_mode: "disable"
+
+actor_rollout_ref:
+  model:
+    override_config:
+      attn_implementation: sdpa
+  actor:
+    use_ref: True
+    use_torch_compile: False
+    use_kl_loss: True
+    kl_loss_coef: 0.01        # verl-agent uses 0.01; exp022-24 used 0.5 (too conservative)
+    kl_loss_type: low_var_kl   # k3 estimator; exp022-24 used kl (k1)
+    clip_ratio_low: 0.2
+    clip_ratio_high: 0.28
+    loss_agg_mode: "seq-mean-token-mean"
+    grad_clip: 1.0
+    optim:
+      lr: 1e-6                # verl-agent uses 1e-6; exp022-24 used 5e-7
+  ref:
+    use_torch_compile: False
+  rollout:
+    response_length: 1024
+    gpu_memory_utilization: 0.4  # conservative for 2-GPU TP
+    max_model_len: 8192
+    temperature: 1.0
+    max_num_batched_tokens: 8192
+    enforce_eager: True
+    val_kwargs:
+      do_sample: True
+      temperature: 0.4
+
+algorithm:
+  adv_estimator: grpo
+  gamma: 0.95
+  high_level_gamma: 0.95
+  norm_adv_by_std_in_grpo: True
+  # TODO: use_invalid_action_penalty and invalid_action_penalty_coef
+  #   verl-agent supports actor_rollout_ref.actor.use_invalid_action_penalty=True
+  #   and actor_rollout_ref.actor.invalid_action_penalty_coef=0.1
+  #   but RAGEN's verl fork does not have this feature yet.
+  #   If Worker 2 adds step-level invalid action penalty to reward computation,
+  #   add the corresponding config key here.
+
+agent_proxy:
+  context_window_mode: "step_independent"  # Worker 1: adding to ctx_manager.py
+  max_context_window: 5                     # bounded history window = 5 steps
+  # step_independent_history_length controls bounded history steps in step-independent mode
+  # max_context_window is the legacy RAGEN key; step_independent mode should use this new key
+  step_independent_history_length: 5
+  max_turn: 50                              # match verl-agent env.max_steps=50
+  max_actions_per_turn: 1
+  max_prompt_length: 4096
+  use_turn_scores: True                     # step-level rewards (Worker 2)
+
+collapse_detection:
+  multi_turn_enabled: false
+
+es_manager:
+  format_penalty: 0
+  train:
+    env_groups: 4
+    group_size: 16
+    env_configs:
+      tags: ["AlfworldSG"]
+      n_groups: [4]
+  val:
+    env_groups: 16     # C003: >=16 episodes for eval
+    group_size: 1
+    env_configs:
+      tags: ["AlfworldSG"]
+      n_groups: [16]

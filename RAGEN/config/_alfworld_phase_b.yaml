@@ -1,0 +1,87 @@
+defaults:
+  - base
+
+hydra:
+  searchpath:
+    - pkg://verl.trainer.config
+
+model_path: TO_BE_SET  # Phase A checkpoint path — update after exp_002 completes
+
+system:
+  CUDA_VISIBLE_DEVICES: "0,1"
+
+micro_batch_size_per_gpu: 1
+ppo_mini_batch_size: 32
+
+trainer:
+  project_name: cost-verify-agent-rl
+  experiment_name: phase-b-alfworld-biavr
+  total_training_steps: 100
+  n_gpus_per_node: 2
+  val_before_train: True
+  test_freq: 20
+  save_freq: 20
+  local_log_dir: "./checkpoints/exp_003/"
+  logger: ['console']
+  max_actor_ckpt_to_keep: 3
+
+actor_rollout_ref:
+  model:
+    override_config:
+      attn_implementation: sdpa
+  actor:
+    use_ref: True
+    use_torch_compile: False
+    use_kl_loss: True
+    kl_loss_coef: 0.01
+    kl_loss_type: kl
+    clip_ratio_low: 0.2
+    clip_ratio_high: 0.28
+    loss_agg_mode: "seq-mean-token-mean"
+    optim:
+      lr: 1e-6
+  ref:
+    use_torch_compile: False
+  rollout:
+    response_length: 1024
+    gpu_memory_utilization: 0.4
+    max_model_len: 32768
+    temperature: 1.0
+    max_num_batched_tokens: 32768
+    enforce_eager: True
+    val_kwargs:
+      do_sample: True
+      temperature: 0.4
+
+algorithm:
+  adv_estimator: grpo
+  gamma: 0.95
+  high_level_gamma: 0.95
+  norm_adv_by_std_in_grpo: True
+
+agent_proxy:
+  max_turn: 50
+  max_actions_per_turn: 1
+
+es_manager:
+  format_penalty: 0
+  train:
+    env_groups: 16
+    group_size: 8
+    env_configs:
+      tags: ["AlfworldBIAVR"]
+      n_groups: [16]
+  val:
+    env_groups: 16
+    group_size: 1
+    env_configs:
+      tags: ["AlfworldBIAVR"]
+      n_groups: [16]
+
+# --- B-IAVR Selective Verification ---
+biavr:
+  beta: 0.3           # target verification rate
+  alpha: 1.0           # action_changed reward weight
+  lambda_init: 0.0     # initial Lagrangian multiplier
+  eta: 0.01            # dual variable learning rate
+  enable_a_pre: true   # compute pre-guidance action for informativeness

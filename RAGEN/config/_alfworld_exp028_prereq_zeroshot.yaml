@@ -1,0 +1,94 @@
+# exp028_prereq: Zero-shot eval of Qwen3-1.7B on ALFWorld
+# 验证"SFT 是毒药"假设：Qwen3-1.7B 原始权重 vs SFT checkpoint (6.25%)
+# 使用 val_only: True，仅执行 val_before_train，不进入训练循环
+
+defaults:
+  - base
+
+hydra:
+  searchpath:
+    - pkg://verl.trainer.config
+
+model_path: ./models/Qwen3-1.7B
+
+system:
+  CUDA_VISIBLE_DEVICES: "0,1"
+
+micro_batch_size_per_gpu: 1
+ppo_mini_batch_size: 32
+
+trainer:
+  project_name: cost-verify-agent-rl
+  experiment_name: exp028-prereq-zeroshot-qwen3-1.7b
+  total_training_steps: 1
+  n_gpus_per_node: 2
+  val_before_train: True
+  val_only: True
+  test_freq: 1
+  save_freq: 1
+  local_log_dir: "./checkpoints/exp028_prereq/"
+  default_local_dir: "./checkpoints/exp028_prereq/"
+  logger: ['console', 'wandb']
+  max_actor_ckpt_to_keep: 1
+  resume_mode: "disable"
+
+actor_rollout_ref:
+  model:
+    override_config:
+      attn_implementation: sdpa
+  actor:
+    use_ref: False
+    use_torch_compile: False
+    use_kl_loss: False
+    kl_loss_coef: 0.0
+    entropy_coeff: 0.0
+    clip_ratio_low: 0.2
+    clip_ratio_high: 0.28
+    loss_agg_mode: "seq-mean-token-mean"
+    optim:
+      lr: 1e-7
+  ref:
+    use_torch_compile: False
+  rollout:
+    response_length: 1024
+    gpu_memory_utilization: 0.4
+    max_model_len: 8192
+    temperature: 1.0
+    max_num_batched_tokens: 8192
+    enforce_eager: True
+    val_kwargs:
+      do_sample: True
+      temperature: 0.4
+
+algorithm:
+  adv_estimator: grpo
+  gamma: 0.95
+  high_level_gamma: 0.95
+  norm_adv_by_std_in_grpo: True
+
+agent_proxy:
+  context_window_mode: "step_independent"
+  max_context_window: 5
+  step_independent_history_length: 5
+  max_turn: 50
+  max_actions_per_turn: 1
+  max_prompt_length: 4096
+  use_turn_scores: True
+
+collapse_detection:
+  multi_turn_enabled: false
+
+es_manager:
+  format_penalty: 0
+  train:
+    env_groups: 1
+    group_size: 2
+    env_configs:
+      tags: ["AlfworldSG"]
+      n_groups: [1]
+  val:
+    env_groups: 16
+    group_size: 1
+    env_configs:
+      tags: ["AlfworldSG"]
+      n_groups: [16]

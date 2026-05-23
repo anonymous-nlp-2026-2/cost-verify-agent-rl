@@ -1,0 +1,8 @@
+defaults:
+  - _alfworld_exp002
+
+trainer:
+  experiment_name: exp002-dryrun
+  total_training_steps: 2
+  local_log_dir: "./checkpoints/exp_002_dryrun/"
+  logger: ['console']

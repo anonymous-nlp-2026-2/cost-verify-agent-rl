@@ -1,0 +1,1090 @@
+{
+  "checkpoint": "./checkpoints/scienceworld_sft/huggingface",
+  "eval_split": "dev",
+  "temperature": 0.0,
+  "history_length": 2,
+  "context_mode": "h=2",
+  "max_steps": 100,
+  "total_episodes": 89,
+  "total_success": 4,
+  "overall_success_rate": 0.0449,
+  "overall_avg_score": 17.44,
+  "total_time_seconds": 2769.6,
+  "timeouts": 0,
+  "errors": 0,
+  "per_task_type": {
+    "boil": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 2.67,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.5633,
+      "avg_format_rate": 1.0
+    },
+    "change-the-state-of-matter-of": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 2.0,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.4,
+      "avg_format_rate": 0.67
+    },
+    "chemistry-mix": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 26.33,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.5733,
+      "avg_format_rate": 1.0
+    },
+    "chemistry-mix-paint-secondary-color": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 10.0,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.1833,
+      "avg_format_rate": 0.34
+    },
+    "chemistry-mix-paint-tertiary-color": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 13.0,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.5333,
+      "avg_format_rate": 1.0
+    },
+    "find-animal": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 25.0,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.58,
+      "avg_format_rate": 1.0
+    },
+    "find-living-thing": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 25.0,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.5833,
+      "avg_format_rate": 1.0
+    },
+    "find-non-living-thing": {
+      "count": 3,
+      "success": 2,
+      "success_rate": 0.6667,
+      "avg_score": 75.0,
+      "avg_steps": 35.3,
+      "avg_valid_rate": 0.86,
+      "avg_format_rate": 1.0
+    },
+    "find-plant": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 44.33,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.6033,
+      "avg_format_rate": 1.0
+    },
+    "freeze": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 8.33,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.5733,
+      "avg_format_rate": 1.0
+    },
+    "grow-fruit": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 12.0,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.61,
+      "avg_format_rate": 1.0
+    },
+    "grow-plant": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 5.67,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.6167,
+      "avg_format_rate": 1.0
+    },
+    "identify-life-stages-1": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 8.67,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.56,
+      "avg_format_rate": 1.0
+    },
+    "identify-life-stages-2": {
+      "count": 2,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 8.0,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.57,
+      "avg_format_rate": 1.0
+    },
+    "inclined-plane-determine-angle": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 10.0,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.37,
+      "avg_format_rate": 0.6733
+    },
+    "inclined-plane-friction-named-surfaces": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 6.67,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.3767,
+      "avg_format_rate": 0.67
+    },
+    "inclined-plane-friction-unnamed-surfaces": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 10.0,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.5833,
+      "avg_format_rate": 1.0
+    },
+    "lifespan-longest-lived": {
+      "count": 3,
+      "success": 1,
+      "success_rate": 0.3333,
+      "avg_score": 50.0,
+      "avg_steps": 67.7,
+      "avg_valid_rate": 0.52,
+      "avg_format_rate": 0.67
+    },
+    "lifespan-longest-lived-then-shortest-lived": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 49.67,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.5533,
+      "avg_format_rate": 1.0
+    },
+    "lifespan-shortest-lived": {
+      "count": 3,
+      "success": 1,
+      "success_rate": 0.3333,
+      "avg_score": 50.0,
+      "avg_steps": 67.7,
+      "avg_valid_rate": 0.5167,
+      "avg_format_rate": 0.67
+    },
+    "measure-melting-point-known-substance": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 6.33,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.5667,
+      "avg_format_rate": 1.0
+    },
+    "measure-melting-point-unknown-substance": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 5.67,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.5733,
+      "avg_format_rate": 1.0
+    },
+    "melt": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 2.0,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.5633,
+      "avg_format_rate": 1.0
+    },
+    "mendelian-genetics-known-plant": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 11.67,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.6167,
+      "avg_format_rate": 1.0
+    },
+    "mendelian-genetics-unknown-plant": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 11.0,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.5633,
+      "avg_format_rate": 1.0
+    },
+    "power-component": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 13.0,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.5533,
+      "avg_format_rate": 1.0
+    },
+    "power-component-renewable-vs-nonrenewable-energy": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 10.0,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.55,
+      "avg_format_rate": 1.0
+    },
+    "test-conductivity": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 8.33,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.3467,
+      "avg_format_rate": 0.6733
+    },
+    "test-conductivity-of-unknown-substances": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 1.67,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.1833,
+      "avg_format_rate": 0.34
+    },
+    "use-thermometer": {
+      "count": 3,
+      "success": 0,
+      "success_rate": 0.0,
+      "avg_score": 8.0,
+      "avg_steps": 100.0,
+      "avg_valid_rate": 0.38,
+      "avg_format_rate": 0.67
+    }
+  },
+  "episodes": [
+    {
+      "task": "boil",
+      "variation": 14,
+      "success": false,
+      "final_score": 3,
+      "num_steps": 100,
+      "valid_action_rate": 0.54,
+      "format_rate": 1.0
+    },
+    {
+      "task": "boil",
+      "variation": 15,
+      "success": false,
+      "final_score": 3,
+      "num_steps": 100,
+      "valid_action_rate": 0.58,
+      "format_rate": 1.0
+    },
+    {
+      "task": "boil",
+      "variation": 16,
+      "success": false,
+      "final_score": 2,
+      "num_steps": 100,
+      "valid_action_rate": 0.57,
+      "format_rate": 1.0
+    },
+    {
+      "task": "change-the-state-of-matter-of",
+      "variation": 14,
+      "success": false,
+      "final_score": 3,
+      "num_steps": 100,
+      "valid_action_rate": 0.61,
+      "format_rate": 1.0
+    },
+    {
+      "task": "change-the-state-of-matter-of",
+      "variation": 15,
+      "success": false,
+      "final_score": 3,
+      "num_steps": 100,
+      "valid_action_rate": 0.58,
+      "format_rate": 1.0
+    },
+    {
+      "task": "change-the-state-of-matter-of",
+      "variation": 16,
+      "success": false,
+      "final_score": 0,
+      "num_steps": 100,
+      "valid_action_rate": 0.01,
+      "format_rate": 0.01
+    },
+    {
+      "task": "chemistry-mix",
+      "variation": 16,
+      "success": false,
+      "final_score": 25,
+      "num_steps": 100,
+      "valid_action_rate": 0.57,
+      "format_rate": 1.0
+    },
+    {
+      "task": "chemistry-mix",
+      "variation": 17,
+      "success": false,
+      "final_score": 25,
+      "num_steps": 100,
+      "valid_action_rate": 0.57,
+      "format_rate": 1.0
+    },
+    {
+      "task": "chemistry-mix",
+      "variation": 18,
+      "success": false,
+      "final_score": 29,
+      "num_steps": 100,
+      "valid_action_rate": 0.58,
+      "format_rate": 1.0
+    },
+    {
+      "task": "chemistry-mix-paint-secondary-color",
+      "variation": 18,
+      "success": false,
+      "final_score": 0,
+      "num_steps": 100,
+      "valid_action_rate": 0.01,
+      "format_rate": 0.01
+    },
+    {
+      "task": "chemistry-mix-paint-secondary-color",
+      "variation": 19,
+      "success": false,
+      "final_score": 30,
+      "num_steps": 100,
+      "valid_action_rate": 0.53,
+      "format_rate": 1.0
+    },
+    {
+      "task": "chemistry-mix-paint-secondary-color",
+      "variation": 20,
+      "success": false,
+      "final_score": 0,
+      "num_steps": 100,
+      "valid_action_rate": 0.01,
+      "format_rate": 0.01
+    },
+    {
+      "task": "chemistry-mix-paint-tertiary-color",
+      "variation": 18,
+      "success": false,
+      "final_score": 13,
+      "num_steps": 100,
+      "valid_action_rate": 0.53,
+      "format_rate": 1.0
+    },
+    {
+      "task": "chemistry-mix-paint-tertiary-color",
+      "variation": 19,
+      "success": false,
+      "final_score": 13,
+      "num_steps": 100,
+      "valid_action_rate": 0.54,
+      "format_rate": 1.0
+    },
+    {
+      "task": "chemistry-mix-paint-tertiary-color",
+      "variation": 20,
+      "success": false,
+      "final_score": 13,
+      "num_steps": 100,
+      "valid_action_rate": 0.53,
+      "format_rate": 1.0
+    },
+    {
+      "task": "find-animal",
+      "variation": 150,
+      "success": false,
+      "final_score": 25,
+      "num_steps": 100,
+      "valid_action_rate": 0.58,
+      "format_rate": 1.0
+    },
+    {
+      "task": "find-animal",
+      "variation": 151,
+      "success": false,
+      "final_score": 25,
+      "num_steps": 100,
+      "valid_action_rate": 0.59,
+      "format_rate": 1.0
+    },
+    {
+      "task": "find-animal",
+      "variation": 152,
+      "success": false,
+      "final_score": 25,
+      "num_steps": 100,
+      "valid_action_rate": 0.57,
+      "format_rate": 1.0
+    },
+    {
+      "task": "find-living-thing",
+      "variation": 150,
+      "success": false,
+      "final_score": 25,
+      "num_steps": 100,
+      "valid_action_rate": 0.58,
+      "format_rate": 1.0
+    },
+    {
+      "task": "find-living-thing",
+      "variation": 151,
+      "success": false,
+      "final_score": 25,
+      "num_steps": 100,
+      "valid_action_rate": 0.59,
+      "format_rate": 1.0
+    },
+    {
+      "task": "find-living-thing",
+      "variation": 152,
+      "success": false,
+      "final_score": 25,
+      "num_steps": 100,
+      "valid_action_rate": 0.58,
+      "format_rate": 1.0
+    },
+    {
+      "task": "find-non-living-thing",
+      "variation": 150,
+      "success": true,
+      "final_score": 100,
+      "num_steps": 3,
+      "valid_action_rate": 1.0,
+      "format_rate": 1.0
+    },
+    {
+      "task": "find-non-living-thing",
+      "variation": 151,
+      "success": true,
+      "final_score": 100,
+      "num_steps": 3,
+      "valid_action_rate": 1.0,
+      "format_rate": 1.0
+    },
+    {
+      "task": "find-non-living-thing",
+      "variation": 152,
+      "success": false,
+      "final_score": 25,
+      "num_steps": 100,
+      "valid_action_rate": 0.58,
+      "format_rate": 1.0
+    },
+    {
+      "task": "find-plant",
+      "variation": 150,
+      "success": false,
+      "final_score": 25,
+      "num_steps": 100,
+      "valid_action_rate": 0.59,
+      "format_rate": 1.0
+    },
+    {
+      "task": "find-plant",
+      "variation": 151,
+      "success": false,
+      "final_score": 25,
+      "num_steps": 100,
+      "valid_action_rate": 0.61,
+      "format_rate": 1.0
+    },
+    {
+      "task": "find-plant",
+      "variation": 152,
+      "success": false,
+      "final_score": 83,
+      "num_steps": 100,
+      "valid_action_rate": 0.61,
+      "format_rate": 1.0
+    },
+    {
+      "task": "freeze",
+      "variation": 14,
+      "success": false,
+      "final_score": 10,
+      "num_steps": 100,
+      "valid_action_rate": 0.56,
+      "format_rate": 1.0
+    },
+    {
+      "task": "freeze",
+      "variation": 15,
+      "success": false,
+      "final_score": 10,
+      "num_steps": 100,
+      "valid_action_rate": 0.58,
+      "format_rate": 1.0
+    },
+    {
+      "task": "freeze",
+      "variation": 16,
+      "success": false,
+      "final_score": 5,
+      "num_steps": 100,
+      "valid_action_rate": 0.58,
+      "format_rate": 1.0
+    },
+    {
+      "task": "grow-fruit",
+      "variation": 62,
+      "success": false,
+      "final_score": 9,
+      "num_steps": 100,
+      "valid_action_rate": 0.62,
+      "format_rate": 1.0
+    },
+    {
+      "task": "grow-fruit",
+      "variation": 63,
+      "success": false,
+      "final_score": 16,
+      "num_steps": 100,
+      "valid_action_rate": 0.6,
+      "format_rate": 1.0
+    },
+    {
+      "task": "grow-fruit",
+      "variation": 64,
+      "success": false,
+      "final_score": 11,
+      "num_steps": 100,
+      "valid_action_rate": 0.61,
+      "format_rate": 1.0
+    },
+    {
+      "task": "grow-plant",
+      "variation": 62,
+      "success": false,
+      "final_score": 4,
+      "num_steps": 100,
+      "valid_action_rate": 0.62,
+      "format_rate": 1.0
+    },
+    {
+      "task": "grow-plant",
+      "variation": 63,
+      "success": false,
+      "final_score": 8,
+      "num_steps": 100,
+      "valid_action_rate": 0.61,
+      "format_rate": 1.0
+    },
+    {
+      "task": "grow-plant",
+      "variation": 64,
+      "success": false,
+      "final_score": 5,
+      "num_steps": 100,
+      "valid_action_rate": 0.62,
+      "format_rate": 1.0
+    },
+    {
+      "task": "identify-life-stages-1",
+      "variation": 6,
+      "success": false,
+      "final_score": 8,
+      "num_steps": 100,
+      "valid_action_rate": 0.56,
+      "format_rate": 1.0
+    },
+    {
+      "task": "identify-life-stages-1",
+      "variation": 7,
+      "success": false,
+      "final_score": 10,
+      "num_steps": 100,
+      "valid_action_rate": 0.58,
+      "format_rate": 1.0
+    },
+    {
+      "task": "identify-life-stages-1",
+      "variation": 8,
+      "success": false,
+      "final_score": 8,
+      "num_steps": 100,
+      "valid_action_rate": 0.54,
+      "format_rate": 1.0
+    },
+    {
+      "task": "identify-life-stages-2",
+      "variation": 4,
+      "success": false,
+      "final_score": 8,
+      "num_steps": 100,
+      "valid_action_rate": 0.6,
+      "format_rate": 1.0
+    },
+    {
+      "task": "identify-life-stages-2",
+      "variation": 5,
+      "success": false,
+      "final_score": 8,
+      "num_steps": 100,
+      "valid_action_rate": 0.54,
+      "format_rate": 1.0
+    },
+    {
+      "task": "inclined-plane-determine-angle",
+      "variation": 84,
+      "success": false,
+      "final_score": 10,
+      "num_steps": 100,
+      "valid_action_rate": 0.02,
+      "format_rate": 0.02
+    },
+    {
+      "task": "inclined-plane-determine-angle",
+      "variation": 85,
+      "success": false,
+      "final_score": 10,
+      "num_steps": 100,
+      "valid_action_rate": 0.53,
+      "format_rate": 1.0
+    },
+    {
+      "task": "inclined-plane-determine-angle",
+      "variation": 86,
+      "success": false,
+      "final_score": 10,
+      "num_steps": 100,
+      "valid_action_rate": 0.56,
+      "format_rate": 1.0
+    },
+    {
+      "task": "inclined-plane-friction-named-surfaces",
+      "variation": 692,
+      "success": false,
+      "final_score": 10,
+      "num_steps": 100,
+      "valid_action_rate": 0.55,
+      "format_rate": 1.0
+    },
+    {
+      "task": "inclined-plane-friction-named-surfaces",
+      "variation": 693,
+      "success": false,
+      "final_score": 0,
+      "num_steps": 100,
+      "valid_action_rate": 0.0,
+      "format_rate": 0.01
+    },
+    {
+      "task": "inclined-plane-friction-named-surfaces",
+      "variation": 694,
+      "success": false,
+      "final_score": 10,
+      "num_steps": 100,
+      "valid_action_rate": 0.58,
+      "format_rate": 1.0
+    },
+    {
+      "task": "inclined-plane-friction-unnamed-surfaces",
+      "variation": 80,
+      "success": false,
+      "final_score": 10,
+      "num_steps": 100,
+      "valid_action_rate": 0.62,
+      "format_rate": 1.0
+    },
+    {
+      "task": "inclined-plane-friction-unnamed-surfaces",
+      "variation": 81,
+      "success": false,
+      "final_score": 10,
+      "num_steps": 100,
+      "valid_action_rate": 0.55,
+      "format_rate": 1.0
+    },
+    {
+      "task": "inclined-plane-friction-unnamed-surfaces",
+      "variation": 82,
+      "success": false,
+      "final_score": 10,
+      "num_steps": 100,
+      "valid_action_rate": 0.58,
+      "format_rate": 1.0
+    },
+    {
+      "task": "lifespan-longest-lived",
+      "variation": 62,
+      "success": false,
+      "final_score": 0,
+      "num_steps": 100,
+      "valid_action_rate": 0.0,
+      "format_rate": 0.01
+    },
+    {
+      "task": "lifespan-longest-lived",
+      "variation": 63,
+      "success": true,
+      "final_score": 100,
+      "num_steps": 3,
+      "valid_action_rate": 1.0,
+      "format_rate": 1.0
+    },
+    {
+      "task": "lifespan-longest-lived",
+      "variation": 64,
+      "success": false,
+      "final_score": 50,
+      "num_steps": 100,
+      "valid_action_rate": 0.56,
+      "format_rate": 1.0
+    },
+    {
+      "task": "lifespan-longest-lived-then-shortest-lived",
+      "variation": 62,
+      "success": false,
+      "final_score": 33,
+      "num_steps": 100,
+      "valid_action_rate": 0.55,
+      "format_rate": 1.0
+    },
+    {
+      "task": "lifespan-longest-lived-then-shortest-lived",
+      "variation": 63,
+      "success": false,
+      "final_score": 83,
+      "num_steps": 100,
+      "valid_action_rate": 0.55,
+      "format_rate": 1.0
+    },
+    {
+      "task": "lifespan-longest-lived-then-shortest-lived",
+      "variation": 64,
+      "success": false,
+      "final_score": 33,
+      "num_steps": 100,
+      "valid_action_rate": 0.56,
+      "format_rate": 1.0
+    },
+    {
+      "task": "lifespan-shortest-lived",
+      "variation": 62,
+      "success": false,
+      "final_score": 50,
+      "num_steps": 100,
+      "valid_action_rate": 0.55,
+      "format_rate": 1.0
+    },
+    {
+      "task": "lifespan-shortest-lived",
+      "variation": 63,
+      "success": true,
+      "final_score": 100,
+      "num_steps": 3,
+      "valid_action_rate": 1.0,
+      "format_rate": 1.0
+    },
+    {
+      "task": "lifespan-shortest-lived",
+      "variation": 64,
+      "success": false,
+      "final_score": 0,
+      "num_steps": 100,
+      "valid_action_rate": 0.0,
+      "format_rate": 0.01
+    },
+    {
+      "task": "measure-melting-point-known-substance",
+      "variation": 218,
+      "success": false,
+      "final_score": 7,
+      "num_steps": 100,
+      "valid_action_rate": 0.56,
+      "format_rate": 1.0
+    },
+    {
+      "task": "measure-melting-point-known-substance",
+      "variation": 219,
+      "success": false,
+      "final_score": 6,
+      "num_steps": 100,
+      "valid_action_rate": 0.55,
+      "format_rate": 1.0
+    },
+    {
+      "task": "measure-melting-point-known-substance",
+      "variation": 220,
+      "success": false,
+      "final_score": 6,
+      "num_steps": 100,
+      "valid_action_rate": 0.59,
+      "format_rate": 1.0
+    },
+    {
+      "task": "measure-melting-point-unknown-substance",
+      "variation": 150,
+      "success": false,
+      "final_score": 6,
+      "num_steps": 100,
+      "valid_action_rate": 0.57,
+      "format_rate": 1.0
+    },
+    {
+      "task": "measure-melting-point-unknown-substance",
+      "variation": 151,
+      "success": false,
+      "final_score": 6,
+      "num_steps": 100,
+      "valid_action_rate": 0.6,
+      "format_rate": 1.0
+    },
+    {
+      "task": "measure-melting-point-unknown-substance",
+      "variation": 152,
+      "success": false,
+      "final_score": 5,
+      "num_steps": 100,
+      "valid_action_rate": 0.55,
+      "format_rate": 1.0
+    },
+    {
+      "task": "melt",
+      "variation": 14,
+      "success": false,
+      "final_score": 3,
+      "num_steps": 100,
+      "valid_action_rate": 0.56,
+      "format_rate": 1.0
+    },
+    {
+      "task": "melt",
+      "variation": 15,
+      "success": false,
+      "final_score": 3,
+      "num_steps": 100,
+      "valid_action_rate": 0.58,
+      "format_rate": 1.0
+    },
+    {
+      "task": "melt",
+      "variation": 16,
+      "success": false,
+      "final_score": 0,
+      "num_steps": 100,
+      "valid_action_rate": 0.55,
+      "format_rate": 1.0
+    },
+    {
+      "task": "mendelian-genetics-known-plant",
+      "variation": 60,
+      "success": false,
+      "final_score": 11,
+      "num_steps": 100,
+      "valid_action_rate": 0.61,
+      "format_rate": 1.0
+    },
+    {
+      "task": "mendelian-genetics-known-plant",
+      "variation": 61,
+      "success": false,
+      "final_score": 11,
+      "num_steps": 100,
+      "valid_action_rate": 0.61,
+      "format_rate": 1.0
+    },
+    {
+      "task": "mendelian-genetics-known-plant",
+      "variation": 62,
+      "success": false,
+      "final_score": 13,
+      "num_steps": 100,
+      "valid_action_rate": 0.63,
+      "format_rate": 1.0
+    },
+    {
+      "task": "mendelian-genetics-unknown-plant",
+      "variation": 240,
+      "success": false,
+      "final_score": 11,
+      "num_steps": 100,
+      "valid_action_rate": 0.55,
+      "format_rate": 1.0
+    },
+    {
+      "task": "mendelian-genetics-unknown-plant",
+      "variation": 241,
+      "success": false,
+      "final_score": 11,
+      "num_steps": 100,
+      "valid_action_rate": 0.57,
+      "format_rate": 1.0
+    },
+    {
+      "task": "mendelian-genetics-unknown-plant",
+      "variation": 242,
+      "success": false,
+      "final_score": 11,
+      "num_steps": 100,
+      "valid_action_rate": 0.57,
+      "format_rate": 1.0
+    },
+    {
+      "task": "power-component",
+      "variation": 10,
+      "success": false,
+      "final_score": 13,
+      "num_steps": 100,
+      "valid_action_rate": 0.52,
+      "format_rate": 1.0
+    },
+    {
+      "task": "power-component",
+      "variation": 11,
+      "success": false,
+      "final_score": 13,
+      "num_steps": 100,
+      "valid_action_rate": 0.59,
+      "format_rate": 1.0
+    },
+    {
+      "task": "power-component",
+      "variation": 12,
+      "success": false,
+      "final_score": 13,
+      "num_steps": 100,
+      "valid_action_rate": 0.55,
+      "format_rate": 1.0
+    },
+    {
+      "task": "power-component-renewable-vs-nonrenewable-energy",
+      "variation": 10,
+      "success": false,
+      "final_score": 10,
+      "num_steps": 100,
+      "valid_action_rate": 0.52,
+      "format_rate": 1.0
+    },
+    {
+      "task": "power-component-renewable-vs-nonrenewable-energy",
+      "variation": 11,
+      "success": false,
+      "final_score": 10,
+      "num_steps": 100,
+      "valid_action_rate": 0.58,
+      "format_rate": 1.0
+    },
+    {
+      "task": "power-component-renewable-vs-nonrenewable-energy",
+      "variation": 12,
+      "success": false,
+      "final_score": 10,
+      "num_steps": 100,
+      "valid_action_rate": 0.55,
+      "format_rate": 1.0
+    },
+    {
+      "task": "test-conductivity",
+      "variation": 450,
+      "success": false,
+      "final_score": 10,
+      "num_steps": 100,
+      "valid_action_rate": 0.52,
+      "format_rate": 1.0
+    },
+    {
+      "task": "test-conductivity",
+      "variation": 451,
+      "success": false,
+      "final_score": 5,
+      "num_steps": 100,
+      "valid_action_rate": 0.01,
+      "format_rate": 0.02
+    },
+    {
+      "task": "test-conductivity",
+      "variation": 452,
+      "success": false,
+      "final_score": 10,
+      "num_steps": 100,
+      "valid_action_rate": 0.51,
+      "format_rate": 1.0
+    },
+    {
+      "task": "test-conductivity-of-unknown-substances",
+      "variation": 300,
+      "success": false,
+      "final_score": 5,
+      "num_steps": 100,
+      "valid_action_rate": 0.55,
+      "format_rate": 1.0
+    },
+    {
+      "task": "test-conductivity-of-unknown-substances",
+      "variation": 301,
+      "success": false,
+      "final_score": 0,
+      "num_steps": 100,
+      "valid_action_rate": 0.0,
+      "format_rate": 0.01
+    },
+    {
+      "task": "test-conductivity-of-unknown-substances",
+      "variation": 302,
+      "success": false,
+      "final_score": 0,
+      "num_steps": 100,
+      "valid_action_rate": 0.0,
+      "format_rate": 0.01
+    },
+    {
+      "task": "use-thermometer",
+      "variation": 270,
+      "success": false,
+      "final_score": 12,
+      "num_steps": 100,
+      "valid_action_rate": 0.58,
+      "format_rate": 1.0
+    },
+    {
+      "task": "use-thermometer",
+      "variation": 271,
+      "success": false,
+      "final_score": 12,
+      "num_steps": 100,
+      "valid_action_rate": 0.56,
+      "format_rate": 1.0
+    },
+    {
+      "task": "use-thermometer",
+      "variation": 272,
+      "success": false,
+      "final_score": 0,
+      "num_steps": 100,
+      "valid_action_rate": 0.0,
+      "format_rate": 0.01
+    }
+  ]
+}

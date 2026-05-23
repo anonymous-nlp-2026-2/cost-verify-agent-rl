@@ -1,0 +1,102 @@
+# exp027: Stabilized GRPO (Reviewer-revised)
+# 基于 exp026 调参，核心修正：
+# - env_groups 4→8（128 rollouts，降低全零 batch 概率——Reviewer 指出这是 step 4 崩溃核心原因）
+# - LR 1e-6→5e-7（降低单步幅度）
+# - KL 0.01→0.005（微降，策略在回退不是发散，升高会加速回退）
+# - entropy_coeff 0.001→0.01（防保守退化）
+# - save_freq 25→5（捕获峰值 checkpoint）
+# - max_actor_ckpt_to_keep 5→10（全保留 50 步的 10 个 checkpoint）
+# - total_steps 150→50（快速验证稳定性）
+# - W&B 强制启用（exp026 教训：WANDB_MODE=disabled 导致 cron 误判）
+
+defaults:
+  - base
+
+hydra:
+  searchpath:
+    - pkg://verl.trainer.config
+
+model_path: ./checkpoints/qwen3_exp021_ragen_sft_v4
+
+system:
+  CUDA_VISIBLE_DEVICES: "0,1"
+
+micro_batch_size_per_gpu: 1
+ppo_mini_batch_size: 32
+
+trainer:
+  project_name: cost-verify-agent-rl
+  experiment_name: exp027-alfworld-stable-grpo
+  total_training_steps: 50
+  n_gpus_per_node: 2
+  val_before_train: True
+  test_freq: 5
+  save_freq: 5
+  local_log_dir: "./checkpoints/exp027/"
+  default_local_dir: "./checkpoints/exp027/"
+  logger: ['console', 'wandb']
+  max_actor_ckpt_to_keep: 10
+  resume_mode: "disable"
+
+actor_rollout_ref:
+  model:
+    override_config:
+      attn_implementation: sdpa
+  actor:
+    use_ref: True
+    use_torch_compile: False
+    use_kl_loss: True
+    kl_loss_coef: 0.005
+    kl_loss_type: low_var_kl
+    entropy_coeff: 0.01
+    clip_ratio_low: 0.2
+    clip_ratio_high: 0.28
+    loss_agg_mode: "seq-mean-token-mean"
+    grad_clip: 1.0
+    optim:
+      lr: 5e-7
+  ref:
+    use_torch_compile: False
+  rollout:
+    response_length: 1024
+    gpu_memory_utilization: 0.4
+    max_model_len: 8192
+    temperature: 1.0
+    max_num_batched_tokens: 8192
+    enforce_eager: True
+    val_kwargs:
+      do_sample: True
+      temperature: 0.4
+
+algorithm:
+  adv_estimator: grpo
+  gamma: 0.95
+  high_level_gamma: 0.95
+  norm_adv_by_std_in_grpo: True
+
+agent_proxy:
+  context_window_mode: "step_independent"
+  max_context_window: 5
+  step_independent_history_length: 5
+  max_turn: 50
+  max_actions_per_turn: 1
+  max_prompt_length: 4096
+  use_turn_scores: True
+
+collapse_detection:
+  multi_turn_enabled: false
+
+es_manager:
+  format_penalty: 0
+  train:
+    env_groups: 8
+    group_size: 16
+    env_configs:
+      tags: ["AlfworldSG"]
+      n_groups: [8]
+  val:
+    env_groups: 16
+    group_size: 1
+    env_configs:
+      tags: ["AlfworldSG"]
+      n_groups: [16]

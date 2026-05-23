@@ -1,0 +1,108 @@
+# exp028b: Recipe Gap — Full GiGPO Recipe Alignment
+# 全面对齐参考论文 (GiGPO/Self-Guide) 的训练 recipe，消除 62pp gap
+#
+# 参数对齐表（exp027 → exp028b → 参考值）：
+#   model_path:          SFT v4 → Qwen3-1.7B-Instruct 冷启动    (GiGPO: Instruct, Self-Guide: Instruct)
+#   LR:                  5e-7 → 1e-6                  (GiGPO: 1e-6)
+#   KL coef:             0.005 → 0.01                 (GiGPO: 0.01)
+#   ppo_mini_batch_size: 32 → 32 (暂保持)             (GiGPO: 256, 后续升级)
+#   total_steps:         50 → 150                     (GiGPO: 150)
+#   env_groups × size:   8×16=128 → 16×8=128          (总 rollout 不变，group 更多样)
+#   history_length:      5 → 2                        (verl-agent: 2)
+#   max_prompt_length:   4096 → 2048                  (verl-agent: 2048)
+#   response_length:     1024 → 512                   (verl-agent: 512)
+#   invalid_action_penalty_coef: 0.1                  (显式启用)
+#   loss_agg_mode:       seq-mean-token-mean → token-mean (GiGPO default)
+
+defaults:
+  - base
+
+hydra:
+  searchpath:
+    - pkg://verl.trainer.config
+
+model_path: ./models/Qwen3-1.7B-Instruct
+
+system:
+  CUDA_VISIBLE_DEVICES: "0,1"
+
+micro_batch_size_per_gpu: 1
+ppo_mini_batch_size: 32
+
+trainer:
+  project_name: cost-verify-agent-rl
+  experiment_name: exp028b-full-recipe
+  total_training_steps: 150
+  n_gpus_per_node: 2
+  val_before_train: True
+  test_freq: 10
+  save_freq: 10
+  local_log_dir: "./checkpoints/exp028b/"
+  default_local_dir: "./checkpoints/exp028b/"
+  logger: ['console', 'wandb']
+  max_actor_ckpt_to_keep: 10
+  resume_mode: "disable"
+
+actor_rollout_ref:
+  model:
+    override_config:
+      attn_implementation: sdpa
+  actor:
+    use_ref: True
+    use_torch_compile: False
+    use_kl_loss: True
+    kl_loss_coef: 0.01
+    kl_loss_type: low_var_kl
+    entropy_coeff: 0.01
+    clip_ratio_low: 0.2
+    clip_ratio_high: 0.28
+    loss_agg_mode: "token-mean"
+    grad_clip: 1.0
+    optim:
+      lr: 1e-6
+  ref:
+    use_torch_compile: False
+  rollout:
+    response_length: 512
+    gpu_memory_utilization: 0.4
+    max_model_len: 4096
+    temperature: 1.0
+    max_num_batched_tokens: 8192
+    enforce_eager: True
+    val_kwargs:
+      do_sample: True
+      temperature: 0.4
+
+algorithm:
+  adv_estimator: grpo
+  gamma: 0.95
+  high_level_gamma: 0.95
+  norm_adv_by_std_in_grpo: True
+  invalid_action_penalty_coef: 0.1
+
+agent_proxy:
+  context_window_mode: "step_independent"
+  max_context_window: 2
+  step_independent_history_length: 2
+  max_turn: 50
+  max_actions_per_turn: 1
+  max_prompt_length: 2048
+  use_turn_scores: True
+
+collapse_detection:
+  multi_turn_enabled: false
+
+es_manager:
+  format_penalty: 0
+  train:
+    env_groups: 16
+    group_size: 8
+    env_configs:
+      tags: ["AlfworldSG"]
+      n_groups: [16]
+  val:
+    env_groups: 16
+    group_size: 1
+    env_configs:
+      tags: ["AlfworldSG"]
+      n_groups: [16]
