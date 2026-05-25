@@ -18,15 +18,15 @@ ppo_mini_batch_size: 16
 
 trainer:
   project_name: cost-verify-agent-rl
-  experiment_name: c-prime-step5-ood-bjb1
+  experiment_name: c-prime-step5-ood
   total_training_steps: 1
   n_gpus_per_node: 1
   val_before_train: True
   val_only: True
   test_freq: 999
   save_freq: 999
-  local_log_dir: "./checkpoints/c_prime_step5_ood_bjb1/"
-  default_local_dir: "./checkpoints/c_prime_step5_ood_bjb1/"
+  local_log_dir: "./checkpoints/c_prime_step5_ood/"
+  default_local_dir: "./checkpoints/c_prime_step5_ood/"
   logger: ['console', 'wandb']
   max_actor_ckpt_to_keep: 1
   resume_mode: "disable"

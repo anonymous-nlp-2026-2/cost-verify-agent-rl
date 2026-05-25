@@ -1,6 +1,6 @@
 # 8B SFT checkpoint clean eval on in-dist 32 tasks (full context)
 # Baseline for comparing RL-trained models
-# Target: bjb1 2x A6000 48GB
+# Target: 2x A6000 48GB
 
 defaults:
   - base

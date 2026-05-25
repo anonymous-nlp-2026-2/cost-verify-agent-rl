@@ -1,6 +1,6 @@
 # ScienceWorld Cell C v5: 修复 v4c response inflation
 # 关键修改: kl_loss_coef 0.01->0.05, max_turn 100->20, multi_turn collapse detection on
-# bjb1-17606 cuda:0,1 (2x RTX PRO 6000 96GB)
+# 2x GPU
 
 defaults:
   - base

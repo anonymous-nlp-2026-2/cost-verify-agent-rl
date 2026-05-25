@@ -1,6 +1,6 @@
 # ScienceWorld Cell C v4: episode-level reward + full context
 # 修复: Py4JError handling, group_size=16, JVM heap 8g, seed 20000
-# bjb1-17606 cuda:0,1 (2x RTX PRO 6000 96GB)
+# 2x GPU
 
 defaults:
   - base

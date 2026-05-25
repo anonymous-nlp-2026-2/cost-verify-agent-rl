@@ -1,6 +1,6 @@
 # ScienceWorld Cell C v6: top-5 easiest tasks, smaller group_size, shorter horizon
 # 关键修改 vs v5: task_filter top5 (SFT >60%), group_size 16->4, max_turn 50->30
-# bjb1-17606 cuda:0,1 (2x RTX PRO 6000 96GB)
+# 2x GPU
 
 defaults:
   - base
